@@ -1,0 +1,27 @@
+{
+  "name": "vertical-slider",
+  "title": "Vertical Slider",
+  "description": "Make vertical half slider with (almost) everything",
+  "version": "0.1.0",
+  "homepage": "https://github.com/ggggino/vertical-slider",
+  "author": {
+    "name": "David Ginanni",
+    "email": "david.ginanni@gmail.com",
+    "url": "www.davidginanni.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ggggino/vertical-slider.git"
+  },
+  "bugs": "https://github.com/ggggino/vertical-slider/issues",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/ggggino/vertical-slider/blob/master/LICENSE-MIT"
+    }
+  ],
+  "dependencies": {
+    "jquery": "*"
+  },
+  "keywords": []
+}
