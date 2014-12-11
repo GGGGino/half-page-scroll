@@ -1,4 +1,4 @@
-/*! Vertical Slider - v0.1.0 - 2014-12-06
+/*! Vertical Slider - v0.1.0 - 2014-12-11
 * https://github.com/ggggino/vertical-slider
 * Copyright (c) 2014 David Ginanni; Licensed MIT */
 (function($) {
