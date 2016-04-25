@@ -130,7 +130,7 @@
     },
     centraCitazione: function(){
       $('.citazione').css({
-        marginTop: (this.getHeightPage()/2)-($('.citazione').height()/2),
+        marginTop: (this.getHeightPage()/2)-($('.citazione').height()/2)
       });
     }
   };

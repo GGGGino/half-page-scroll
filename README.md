@@ -15,16 +15,14 @@ In your web page:
 <script src="dist/vertical-slider.min.js"></script>
 <script>
 jQuery(function($) {
-  $.awesome(); // "awesome"
+    var homeSlide = $('.contenitoreHome').homeSlide({
+        duration: 2000
+    });
 });
 </script>
 ```
 
-## Documentation
-_(Coming soon)_
+## Configurations
 
-## Examples
-_(Coming soon)_
-
-## Release History
-_(Nothing yet)_
+### duration:
+`duration` Duration of the slide

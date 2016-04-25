@@ -1,6 +1,6 @@
-/*! Vertical Slider - v0.1.0 - 2014-12-11
+/*! Vertical Slider - v0.1.0 - 2016-04-25
 * https://github.com/ggggino/vertical-slider
-* Copyright (c) 2014 David Ginanni; Licensed MIT */
+* Copyright (c) 2016 David Ginanni; Licensed MIT */
 (function($) {
 
   $.fn.reverseChildren = function() {
