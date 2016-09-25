@@ -23,40 +23,18 @@
   module('jQuery#vertical_slider', {
     // This will run before each test in this module.
     setup: function() {
-      this.elems = $('#qunit-fixture').children();
+      this.leftElement = $('.leftPart');
+      this.rightElement = $('.rightPart');
     }
   });
 
-  test('is chainable', function() {
+  test('is same number', function() {
     expect(1);
+    var leftChild = this.leftElement.find('.contOutSez'),
+        rightChild = this.rightElement.find('.contOutSez');
     // Not a bad test to run on collection methods.
-    strictEqual(this.elems.vertical_slider(), this.elems, 'should be chainable');
+    strictEqual(leftChild.length, rightChild.length, 'Same Number');
   });
 
-  test('is awesome', function() {
-    expect(1);
-    strictEqual(this.elems.vertical_slider().text(), 'awesome0awesome1awesome2', 'should be awesome');
-  });
-
-  module('jQuery.vertical_slider');
-
-  test('is awesome', function() {
-    expect(2);
-    strictEqual($.vertical_slider(), 'awesome.', 'should be awesome');
-    strictEqual($.vertical_slider({punctuation: '!'}), 'awesome!', 'should be thoroughly awesome');
-  });
-
-  module(':vertical_slider selector', {
-    // This will run before each test in this module.
-    setup: function() {
-      this.elems = $('#qunit-fixture').children();
-    }
-  });
-
-  test('is awesome', function() {
-    expect(1);
-    // Use deepEqual & .get() when comparing jQuery objects.
-    deepEqual(this.elems.filter(':vertical_slider').get(), this.elems.last().get(), 'knows awesome when it sees it');
-  });
 
 }(jQuery));

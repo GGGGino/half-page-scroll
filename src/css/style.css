@@ -61,6 +61,10 @@ body .contenitoreHome .rightPart .contOutSez {
 body .contenitoreHome .contOutSez {
   height: 100%;
 }
+/* line 117, ../scss/opera.scss */
+body .contenitoreHome .contOutSez > * {
+  display: inline-block;
+}
 /* line 119, ../scss/opera.scss */
 body .contenitoreHome .contOutSez .citazione {
   color: #FFF;
