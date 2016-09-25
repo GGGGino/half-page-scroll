@@ -1,6 +1,6 @@
-# Vertical Slider
+# Half Page scroll
 
-Make vertical half slider with (almost) everything
+Split your pages in two part with inverse scroll
 
 ## Getting Started
 Download the [production version][min] or the [development version][max].
