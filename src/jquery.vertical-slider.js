@@ -155,7 +155,7 @@
   $.fn.homeSlide = function(options) {
     var questo = $(this);
     options = options || {};
-    if( $('.contenitoreHome').length > 0 ){
+    if( questo.length > 0 ){
       return new $.homeSlide(questo, options);
     }else{
       return false;
