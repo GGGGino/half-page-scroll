@@ -26,7 +26,7 @@
     this.sezioniTot = $('.leftPart .contRow .contOutSez').length;
     this.isAnimating = false;
     this.options = $.extend(opzioni, options);
-    this.keys = {37: 1, 38: 1, 39: 1, 40: 1}
+    this.keys = {37: 1, 38: 1, 39: 1, 40: 1};
 
     this.prepare();
 
@@ -37,28 +37,11 @@
     
     this.resizePage();
 
-    //eventi vari
-    function handleScroll(e) {
-      return;
-      oggetto[0].removeEventListener('DOMMouseScroll',handleScroll,false);
-      oggetto[0].removeEventListener('mousewheel',    handleScroll,false);
-
-      if (e.wheelDelta > 0 && !questo.isAnimating){
-        questo.prevSection();
-      }else{
-        questo.nextSection();
-      }
-
-      setTimeout(function(){
-        oggetto[0].addEventListener('DOMMouseScroll',handleScroll,false);
-        oggetto[0].addEventListener('mousewheel',    handleScroll,false);
-      }, questo.options.duration);
-    }
-
     function preventDefault(e) {
         e = e || window.event;
-        if (e.preventDefault)
-            e.preventDefault();
+        if (e.preventDefault) {
+          e.preventDefault();
+        }
 
         if( questo.isAnimating ){
           return false;
@@ -82,8 +65,9 @@
         }
     }
     
-    if (window.addEventListener) // older FF
-        window.addEventListener('DOMMouseScroll', preventDefault, false);
+    if (window.addEventListener){ // older FF
+      window.addEventListener('DOMMouseScroll', preventDefault, false);
+    }
     window.onwheel = preventDefault; // modern standard
     window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
     window.ontouchmove  = preventDefault; // mobile
@@ -149,8 +133,6 @@
       if ( this.sezioneAttuale > 0 ){
         this.sezioneAttuale--;
         this.isAnimating = true;
-        console.log('entraa');
-        console.log(this.sezioneAttuale);
 
         $('.leftPart .contRow').animate({
           marginTop: ( this.getHeightPage()*this.sezioneAttuale )*-1+"px",

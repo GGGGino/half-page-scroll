@@ -1,4 +1,4 @@
-/*! Vertical Slider - v0.1.0 - 2016-04-25
+/*! Vertical Slider - v0.1.0 - 2016-09-25
 * https://github.com/ggggino/vertical-slider
 * Copyright (c) 2016 David Ginanni; Licensed MIT */
 (function($) {
@@ -18,8 +18,12 @@
         questo = this;
 
     this.sezioneAttuale = 0;
+    this.sezioniTot = $('.leftPart .contRow .contOutSez').length;
     this.isAnimating = false;
     this.options = $.extend(opzioni, options);
+    this.keys = {37: 1, 38: 1, 39: 1, 40: 1};
+
+    this.prepare();
 
     invertito = oggetto.html().replace("leftPart", "rightPart");
     oggetto.html(oggetto.html()+invertito);
@@ -28,29 +32,45 @@
     
     this.resizePage();
 
-    //eventi vari
-    function handleScroll(e){
-      oggetto[0].removeEventListener('DOMMouseScroll',handleScroll,false);
-      oggetto[0].removeEventListener('mousewheel',    handleScroll,false);
+    function preventDefault(e) {
+        e = e || window.event;
+        if (e.preventDefault) {
+          e.preventDefault();
+        }
 
-      if (e.wheelDelta > 0 && !questo.isAnimating){
-        questo.prevSection();
-      }else{
-        questo.nextSection();
-      }
+        if( questo.isAnimating ){
+          return false;
+        }
 
-      setTimeout(function(){
-        oggetto[0].addEventListener('DOMMouseScroll',handleScroll,false);
-        oggetto[0].addEventListener('mousewheel',    handleScroll,false);
-      }, questo.options.duration);
+        if (e.wheelDelta > 0 || e.keyCode === 38){
+          questo.prevSection();
+        }
+
+        if (e.wheelDelta < 0|| e.keyCode === 40){
+          questo.nextSection();
+        }
+
+        e.returnValue = false;  
     }
+
+    function preventDefaultForScrollKeys(e) {
+        if (questo.keys[e.keyCode]) {
+            preventDefault(e);
+            return false;
+        }
+    }
+    
+    if (window.addEventListener){ // older FF
+      window.addEventListener('DOMMouseScroll', preventDefault, false);
+    }
+    window.onwheel = preventDefault; // modern standard
+    window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+    window.ontouchmove  = preventDefault; // mobile
+    document.onkeydown  = preventDefaultForScrollKeys;
+
     $( window ).resize(function() {
       questo.resizePage();
     });
-
-    oggetto[0].addEventListener('DOMMouseScroll',handleScroll,false);
-    oggetto[0].addEventListener('mousewheel',    handleScroll,false);
-
   };
 
   // Static method default options.
@@ -61,13 +81,16 @@
 
   // methods.
   $.homeSlide.prototype = {
-    getHeightPage: function(){
+    prepare: function() {
+      $('.contOutSez').css("background-image", "url(" + $('.contOutSez').data('image') + ")");
+    },
+    getHeightPage: function() {
       return $(window).height();
     },
-    getWidthPage: function(){
+    getWidthPage: function() {
       return $(window).width();
     },
-    resizePage: function(){
+    resizePage: function() {
       $('.contOutSez').height(this.getHeightPage());
       $('.contOutSez').width(this.getWidthPage());
       $('.rightPart .contContRow').css({
@@ -79,53 +102,46 @@
       $('.rightPart .contRow').css({
         marginTop: this.getHeightPage()*this.sezioneAttuale+"px"
       });
-      this.centraCitazione();
       return this;
     },
-    muoviPagina: function(sezione){
+    muoviPagina: function(sezione) {
         return sezione;
     },
-    nextSection: function(){
+    nextSection: function() {
       var questo = this;
-      if ( questo.sezioneAttuale + 1 <= $('.rightPart .contRow .contOutSez').length - 1 ){
-        questo.sezioneAttuale++;
+      if ( this.sezioneAttuale < this.sezioniTot - 1 ){
+        this.sezioneAttuale++;
+        this.isAnimating = true;
 
-        setTimeout(function(){
-          $('.citazione').fadeOut(300);
-        }, 100);
         $('.leftPart .contRow').animate({
-          marginTop: ( questo.getHeightPage()*questo.sezioneAttuale )*-1+"px"
-        }, questo.options.duration);
+          marginTop: ( this.getHeightPage()*this.sezioneAttuale )*-1+"px"
+        }, this.options.duration);
         $('.rightPart .contRow').animate({
-          marginTop: ( questo.getHeightPage()*questo.sezioneAttuale )+"px"
-        }, questo.options.duration);
-        setTimeout(function(){
-          $('.citazione').fadeIn(300);
-        }, questo.options.duration);
+          marginTop: ( this.getHeightPage()*this.sezioneAttuale )+"px"
+        }, this.options.duration, function() {
+          questo.isAnimating = false;
+        });
       }
     },
-    prevSection: function(){
+    prevSection: function() {
       var questo = this;
-      if ( questo.sezioneAttuale - 1 >= 0 ){
-        questo.sezioneAttuale--;
+      if ( this.sezioneAttuale > 0 ){
+        this.sezioneAttuale--;
+        this.isAnimating = true;
 
-        setTimeout(function(){
-          $('.citazione').fadeOut(300);
-        }, 100);
         $('.leftPart .contRow').animate({
-          marginTop: ( questo.getHeightPage()*questo.sezioneAttuale )*-1+"px",
-        }, questo.options.duration);
+          marginTop: ( this.getHeightPage()*this.sezioneAttuale )*-1+"px",
+        }, this.options.duration);
         $('.rightPart .contRow').animate({
-          marginTop: ( questo.getHeightPage()*questo.sezioneAttuale )+"px",
-        }, questo.options.duration);
-        setTimeout(function(){
-          $('.citazione').fadeIn(300);
-        }, questo.options.duration);
+          marginTop: ( this.getHeightPage()*this.sezioneAttuale )+"px",
+        }, this.options.duration, function() {
+          questo.isAnimating = false;
+        });
       }
     },
-    centraCitazione: function(){
+    centraCitazione: function() {
       $('.citazione').css({
-        marginTop: (this.getHeightPage()/2)-($('.citazione').height()/2),
+        marginTop: (this.getHeightPage()/2)-($('.citazione').height()/2)
       });
     }
   };
